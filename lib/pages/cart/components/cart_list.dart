@@ -18,7 +18,7 @@ class CartList extends StatelessWidget {
       return itemCount == 0
           ? const Center(
               child: CustomText(
-                text: 'Empty Cart. Go buy some stuff',
+                text: 'Empty Cart.\nGo buy some stuff',
                 textColor: Colors.deepOrange,
                 fontWeight: FontWeight.bold,
                 size: 32,
