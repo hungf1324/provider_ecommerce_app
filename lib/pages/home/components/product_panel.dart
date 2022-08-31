@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../data/product_state.dart';
 import '../../../components/price_row.dart';
 import '../../../models/product_model.dart';
 import '../../../utils/device_parameters.dart';
@@ -42,9 +44,9 @@ class ProductPanel extends StatelessWidget {
         crossAxisSpacing: 15,
         mainAxisSpacing: 15,
       ),
-      itemCount: productionList.length,
+      itemCount: productState.productionList.length,
       itemBuilder: (context, index) {
-        ProductModel product = productionList[index];
+        ProductModel product = productState.productionList[index];
         return _buildProductItem(context, product, index);
       },
     );
@@ -82,12 +84,15 @@ class ProductPanel extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                    //onPressed: onPressedFavoriteButton,
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite_rounded,
-                      color: Colors.grey,
+                  Consumer<ProductState>(
+                    builder: (context, value, child) => IconButton(
+                      onPressed: () => productState.changeFavorite(index),
+                      icon: Icon(
+                        Icons.favorite_rounded,
+                        color: value.productionList[index].isFavorited
+                            ? Colors.red
+                            : Colors.grey,
+                      ),
                     ),
                   )
                 ],

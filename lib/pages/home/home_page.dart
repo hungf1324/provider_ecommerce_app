@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider_ecommerce_app/pages/home/components/hello_panel.dart';
 import '../../constants/img_string.dart';
 import '../../components/custom_appbar.dart';
 import '../production/production_page.dart';
+import 'components/hello_panel.dart';
 import 'components/categories_panel.dart';
 import 'components/product_panel.dart';
 import 'components/sale_off_panel.dart';

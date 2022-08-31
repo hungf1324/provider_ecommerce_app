@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_ecommerce_app/data/cart_state.dart';
-import '../pages/cart/cart_page.dart';
-import '../pages/home/home_page.dart';
-import '../pages/production/production_page.dart';
+import 'data/cart_state.dart';
+import 'data/product_state.dart';
+import 'pages/cart/cart_page.dart';
+import 'pages/home/home_page.dart';
+import 'pages/production/production_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,8 +15,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => cartState,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CartState>(create: (context) => cartState),
+        ChangeNotifierProvider<ProductState>(create: (context) => productState),
+      ],
       child: MaterialApp(
         title: 'Provider Ecommerce App',
         debugShowCheckedModeBanner: false,

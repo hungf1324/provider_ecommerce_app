@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../data/product_state.dart';
 import '../../../components/price_row.dart';
 import '../../../models/product_model.dart';
 import '../../../widgets/custom_text.dart';
@@ -18,13 +20,9 @@ class ProductionDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText(
-            text: product.name,
-            fontWeight: FontWeight.bold,
-            size: 20,
-          ),
+          _buildNameRow(product),
           const SizedBox(height: 20),
-          buildStarBar(),
+          _buildStarBar(),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,7 +52,43 @@ class ProductionDetail extends StatelessWidget {
     );
   }
 
-  Row buildStarBar() {
+  Row _buildNameRow(ProductModel product) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CustomText(
+          text: product.name,
+          fontWeight: FontWeight.bold,
+          size: 20,
+        ),
+        Consumer<ProductState>(builder: (context, value, child) {
+          int index = value.productionList.indexOf(product);
+          Color color = value.productionList.elementAt(index).isFavorited
+              ? Colors.red
+              : Colors.grey;
+          return OutlinedButton(
+            onPressed: () => productState.changeFavorite(index),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.favorite_sharp,
+                  color: color,
+                ),
+                const SizedBox(width: 5),
+                CustomText(
+                  text: 'Favorite',
+                  textColor: color,
+                ),
+              ],
+            ),
+          );
+        })
+      ],
+    );
+  }
+
+  Row _buildStarBar() {
     return Row(
       children: [
         for (int i = 0; i < 5; i++)
